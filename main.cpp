@@ -8,49 +8,51 @@ struct Position {
     int y;
 };
 
-const char workerChar = 'R';
-const char packageChar = 'x';
-const char placeChar = 'O';
-const char wallChar = '#';
+const char WORKER_CHAR = 'R';
+const char PACKAGE_CHAR = 'x';
+const char PLACE_CHAR = 'O';
+const char WALL_CHAR = '#';
 
-const char FirstMap[100][200]
+const char FIRST_MAP[100][200]
 {
-    "####################",
-    "#     R            #",
-    "#     ######## x   #",
-    "#     #      #     #",
-    "#     #      #     #",
-    "#   O #      #     #",
-    "#   O ########     #",
-    "#            x     #",
-    "#                  #",
-    "####################",
+    "########################",
+    "######            ######",
+    "####    R           ####",
+    "###     ### #### xx  ###",
+    "###            #     ###",
+    "###     #      #     ###",
+    "###     #    O #     ###",
+    "###     ########     ###",
+    "####                 ###",
+    "###O                ###",
+    "#######    O    ########",
+    "########################",
 };
 
-const char SecondMap[100][200]
+const char SECOND_MAP[100][200]
 {
-    "###############",
-    "####   ########",
-    "#### x ########",
-    "#### x ###O####",
-    "###### ###O####",
-    "######    O####",
-    "##### x #  ####",
-    "#####R  #######",
-    "###############"
+    "#######################",
+    "########   ############",
+    "######## x ############",
+    "######## x ###O########",
+    "########## ###O########",
+    "##########    O########",
+    "######### x #  ########",
+    "#########R  ###########",
+    "#######################"
 };
 
-const char ThirdMap[100][200]
+const char THIRD_MAP[100][200]
 {
-    "################",
-    "######     #####",
-    "#####OR    #####",
-    "####### x  #####",
-    "#####O# x  #####",
-    "##### # O  #####",
-    "#####x  xxO#####",
-    "#####   O  #####",
-    "################"
+    "########################",
+    "##########          ####",
+    "#########OR    #########",
+    "########### x  #########",
+    "###   ###O# x  #########",
+    "##    ### # O  #########",
+    "##    ###x  xxO#########",
+    "##    ###   O  #########",
+    "########################"
 };
 
 
@@ -67,29 +69,29 @@ enum direction
 
 
 
-void findPosition (char Map[100][200], Position *worker, Position *package, Position *place,
+void findPosition (char MAP[100][200], Position *worker, Position *package, Position *place,
                     int *packageCounter, int *placeCounter)
 {
-    for (int i=0; i<100; i++)
+    for (int i = 0; i < 100; i++)
     {
-        for (int j=0; j<200; j++)
+        for (int j = 0; j < 200; j++)
         {
-            if (Map[i][j] == workerChar)
+            if (MAP[i][j] == WORKER_CHAR)
             {
                 worker->x = j;
                 worker->y = i;
 
-                Map[i][j] = ' ';
+                MAP[i][j] = ' ';
             }
-            else if (Map[i][j] == packageChar)
+            else if (MAP[i][j] == PACKAGE_CHAR)
             {
                 package[*packageCounter].x = j;
                 package[*packageCounter].y = i;
 
-                Map[i][j] = ' ';
+                MAP[i][j] = ' ';
                 (*packageCounter)++;
             }
-            else if (Map[i][j] == placeChar)
+            else if (MAP[i][j] == PLACE_CHAR)
             {
                 place[*placeCounter].x = j;
                 place[*placeCounter].y = i;
@@ -102,34 +104,34 @@ void findPosition (char Map[100][200], Position *worker, Position *package, Posi
 
 
 
-void printMap (char Map[100][200], Position *worker, Position *package, Position *place, int *packageCounter)
+void printMap (char MAP[100][200], Position *worker, Position *package, Position *place, int *packageCounter)
 {
     system ("cls");
 
-	for (int i=0; i<100; i++)
+	for (int i = 0; i < 100; i++)
 	{
 		bool nextLine = false;
 
-		for (int j=0; j<200; j++)
+		for (int j = 0; j < 200; j++)
 		{
 			char field = ' ';
 
 			if ((worker->y == i) && (worker->x == j))
 			{
-				cout << workerChar;
+				cout << WORKER_CHAR;
 				continue;
 			}
 
-			for (int k=0; k < *packageCounter; k++)
+			for (int k = 0; k < *packageCounter; k++)
 			{
 				if ((package[k].x == j) && (package[k].y == i))
 				{
-					field = packageChar;
+					field = PACKAGE_CHAR;
 					break;
 				}
 				else if ((place[k].x == j) && (place[k].y == i))
                 {
-					field = placeChar;
+					field = PLACE_CHAR;
 				}
 			}
 
@@ -139,9 +141,9 @@ void printMap (char Map[100][200], Position *worker, Position *package, Position
 				continue;
 			}
 
-			if (Map[i][j] != '\0')
+			if (MAP[i][j] != '\0')
             {
-				cout << Map[i][j];
+				cout << MAP[i][j];
 				nextLine = true;
 			}
 		}
@@ -151,16 +153,16 @@ void printMap (char Map[100][200], Position *worker, Position *package, Position
 
 
 
-bool checkWall (char Map[100][200], Position *package, Position *new_worker, Position *new_package,
+bool checkWall (char MAP[100][200], Position *package, Position *new_worker, Position *new_package,
                         int packageCounter, int packageNumber)
 {
-    if (Map[new_worker->y][new_worker->x] == wallChar) return true;
+    if (MAP[new_worker->y][new_worker->x] == WALL_CHAR) return true;
 
-    if (packageNumber>=0)
+    if (packageNumber >= 0)
     {
-        if (Map[new_package->y][new_package->x] == wallChar) return true;
+        if (MAP[new_package->y][new_package->x] == WALL_CHAR) return true;
 
-        for (int i=0; i<packageCounter; i++)
+        for (int i = 0; i < packageCounter; i++)
         {
             if ((package[i].x == (new_package->x)) && (package[i].y == (new_package->y))) return true;
         }
@@ -170,7 +172,7 @@ bool checkWall (char Map[100][200], Position *package, Position *new_worker, Pos
 
 
 
-void movement (char Map[100][200], Position *worker, Position *package, Position *place,
+void movement (char MAP[100][200], Position *worker, Position *package, Position *place,
                  int *packageCounter, int *movesCounter, bool *gameEnd)
 {
     char key = cin.get();
@@ -215,7 +217,7 @@ void movement (char Map[100][200], Position *worker, Position *package, Position
 
     int current_package = -1;
 
-    for (int i=0; i<*packageCounter; i++)
+    for (int i = 0; i < *packageCounter; i++)
     {
         if ((package[i].x == new_worker.x) && (package[i].y == new_worker.y))
         {
@@ -234,7 +236,7 @@ void movement (char Map[100][200], Position *worker, Position *package, Position
         else if (dir == RIGHT) new_package.x++;
     }
 
-    if (!checkWall(Map, package, &new_worker, &new_package, *packageCounter, current_package))
+    if (!checkWall(MAP, package, &new_worker, &new_package, *packageCounter, current_package))
     {
         worker->x = new_worker.x;
         worker->y = new_worker.y;
@@ -246,11 +248,11 @@ void movement (char Map[100][200], Position *worker, Position *package, Position
         }
         (*movesCounter)++;
     }
-
+  
     int onPlace[10] = {0};
-    for (int k=0; k<*packageCounter; k++)
+    for (int k = 0; k < *packageCounter; k++)
     {
-        for (int m=0; m<*packageCounter; m++)
+        for (int m = 0; m < *packageCounter; m++)
         {
             if ((package[k].x == place[m].x) && (package[k].y == place[m].y))
             {
@@ -265,20 +267,19 @@ void movement (char Map[100][200], Position *worker, Position *package, Position
         if (!onPlace[k])
         {
             *gameEnd = false;
-            break;
+             break;
         }
     }
 }
 
 
-
-void copyMap(const char fromMap[100][200], char toMap[100][200])
+void copyMap(const char FROM_MAP[100][200], char TO_MAP[100][200])
 {
-    for (int i=0; i<100; i++)
+    for (int i = 0; i < 100; i++)
     {
-        for (int j=0; j<200; j++)
+        for (int j = 0; j < 200; j++)
         {
-            toMap[i][j] = fromMap[i][j];
+            TO_MAP[i][j] = FROM_MAP[i][j];
         }
     }
 }
@@ -303,7 +304,7 @@ int main()
     Position place[10];
     int placeCounter = 0;
 
-    char current_Map[100][200];
+    char currentMap[100][200];
 
     cout << " \n \t\t\t WELCOME TO SOKOBAN GAME! " << endl;
     cout << endl;
@@ -318,21 +319,20 @@ int main()
         cout << " \t\t2. Second Map " << endl;
         cout << " \t\t3. Third Map " << endl;
 
-
         cin >> choice;
 
         switch(choice)
         {
             case '1':
-                copyMap(FirstMap, current_Map);
+                copyMap(FIRST_MAP, currentMAP);
                 gameStart = true;
                 break;
             case '2':
-                copyMap(SecondMap, current_Map);
+                copyMap(SECOND_MAP, currentMAP);
                 gameStart = true;
                 break;
             case '3':
-                copyMap(ThirdMap, current_Map);
+                copyMap(THIRD_MAP, currentMAP);
                 gameStart = true;
                 break;
             case 'q':
@@ -344,12 +344,12 @@ int main()
     }
 
 
-    findPosition(current_Map, &worker, package, place, &packageCounter, &placeCounter);
+    findPosition(currentMap, &worker, package, place, &packageCounter, &placeCounter);
 
     while (!gameEnd)
     {
-        movement(current_Map, &worker, package, place, &packageCounter, &movesCounter, &gameEnd);
-        printMap(current_Map, &worker, package, place, &packageCounter);
+        movement(currentMap, &worker, package, place, &packageCounter, &movesCounter, &gameEnd);
+        printMap(currentMap, &worker, package, place, &packageCounter);
     }
 
     cout << endl;
