@@ -24,8 +24,8 @@ const char FIRST_MAP[100][200]
     "###     #    O #     ###",
     "###     ########     ###",
     "####                 ###",
-    "###O                ###",
-    "#######    O    ########",
+    "###O                 ###",
+    "#######         ########",
     "########################",
 };
 
@@ -324,15 +324,15 @@ int main()
         switch(choice)
         {
             case '1':
-                copyMap(FIRST_MAP, currentMAP);
+                copyMap(FIRST_MAP, currentMap);
                 gameStart = true;
                 break;
             case '2':
-                copyMap(SECOND_MAP, currentMAP);
+                copyMap(SECOND_MAP, currentMap);
                 gameStart = true;
                 break;
             case '3':
-                copyMap(THIRD_MAP, currentMAP);
+                copyMap(THIRD_MAP, currentMap);
                 gameStart = true;
                 break;
             case 'q':
