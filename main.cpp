@@ -107,11 +107,11 @@ void findPosition (char MAP[100][200], Position *worker, Position *package, Posi
 void printMap (char MAP[100][200], Position *worker, Position *package, Position *place, int *packageCounter)
 {
     system ("cls");
-
+    cout << "\n\n\n";
 	for (int i = 0; i < 100; i++)
 	{
 		bool nextLine = false;
-
+        cout << "\t\t\t";
 		for (int j = 0; j < 200; j++)
 		{
 			char field = ' ';
@@ -149,6 +149,7 @@ void printMap (char MAP[100][200], Position *worker, Position *package, Position
 		}
        if (nextLine) cout << endl;
     }
+        
 }
 
 
@@ -306,7 +307,7 @@ int main()
 
     char currentMap[100][200];
 
-    cout << " \n \t\t\t WELCOME TO SOKOBAN GAME! " << endl;
+    cout << " \n\n \t\t\t WELCOME TO SOKOBAN GAME! " << endl;
     cout << endl;
     cout << " \n\t Enter your name: "; cin >> name;
     cout << "\n\t Hello " << name << "!" << endl;
@@ -319,6 +320,7 @@ int main()
         cout << " \t\t2. Second Map " << endl;
         cout << " \t\t3. Third Map " << endl;
 
+        cout << "\n\t\t";
         cin >> choice;
 
         switch(choice)
@@ -339,12 +341,13 @@ int main()
                 exit(0);
             default:
                 system ("cls");
-                cout << " Invalid option. Choose once again.  " << endl;
+                cout << "\n Invalid option. Choose once again.  " << endl;
         }
     }
 
 
     findPosition(currentMap, &worker, package, place, &packageCounter, &placeCounter);
+
 
     while (!gameEnd)
     {
